@@ -1,0 +1,41 @@
+{
+	"name": "memoize-decorator",
+	"version": "1.0.0",
+	"description": "Cache the result of a function.",
+	"license": "MIT",
+	"module": "memoize.js",
+	"main": "memoize.common.js",
+	"types": "memoize.d.ts",
+	"sideEffects": false,
+	"scripts": {
+		"build": "tsc memoize.ts",
+		"test": "npx jest",
+		"coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+		"example": "node example.js"
+	},
+	"keywords": [
+		"memoize",
+		"decorator",
+		"cache"
+	],
+	"author": {
+		"name": "Edwin Martin",
+		"email": "edwin@bitstorm.org",
+		"url": "https://bitstorm.org/"
+	},
+	"files": [
+		"memoize.js",
+		"memoize.common.js",
+		"memoize.d.ts"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/edwinm/memoize-decorator.git"
+	},
+	"devDependencies": {
+		"coveralls": "^3.0.3",
+		"jest": "^24.1.0",
+		"typescript": "^3.4.3"
+	},
+	"dependencies": {}
+}
