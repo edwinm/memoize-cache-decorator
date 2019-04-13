@@ -6,7 +6,7 @@
 	"main": "memoize.ts",
 	"sideEffects": false,
 	"scripts": {
-		"test": "npx tsc && node test/test.js",
+		"test": "npx tsc && npx jest test/test.js",
 		"coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
 	},
 	"keywords": [
