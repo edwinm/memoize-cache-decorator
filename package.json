@@ -3,20 +3,19 @@
 	"version": "1.0.0",
 	"description": "Cache the result of a function.",
 	"license": "MIT",
-	"module": "memoize.js",
-	"main": "memoize.common.js",
-	"types": "memoize.d.ts",
+	"main": "memoize.ts",
 	"sideEffects": false,
 	"scripts": {
-		"build": "tsc memoize.ts",
-		"test": "npx jest",
-		"coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-		"example": "node example.js"
+		"test": "npx tsc && node test/test.js",
+		"coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
 	},
 	"keywords": [
 		"memoize",
 		"decorator",
-		"cache"
+		"cache",
+		"clear",
+		"reset",
+		"timeout"
 	],
 	"author": {
 		"name": "Edwin Martin",
@@ -24,9 +23,7 @@
 		"url": "https://bitstorm.org/"
 	},
 	"files": [
-		"memoize.js",
-		"memoize.common.js",
-		"memoize.d.ts"
+		"memoize.ts"
 	],
 	"repository": {
 		"type": "git",
