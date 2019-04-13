@@ -9,7 +9,7 @@ export function memoize() {
         const fn = propertyDesciptor.value;
 
         propertyDesciptor.value = function(...args) {
-          let json = JSON.stringify(args);
+          let json = `${target.constructor.name}:${propertyName}:${JSON.stringify(args)}`;
             if (map.has(json)) {
                 return map.get(json);
             } else {
