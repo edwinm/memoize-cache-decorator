@@ -1,2 +1,5 @@
 /node_modules
 /.idea
+/memoize.js
+/test/test.js
+/test/test.js.map
