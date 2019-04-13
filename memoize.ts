@@ -1,5 +1,3 @@
-const map = new Map();
-
 export function memoize() {
     return function(
         target: Object,
@@ -7,9 +5,10 @@ export function memoize() {
         propertyDesciptor: PropertyDescriptor
     ): PropertyDescriptor {
         const fn = propertyDesciptor.value;
+		    const map = new Map();
 
         propertyDesciptor.value = function(...args) {
-          let json = `${target.constructor.name}:${propertyName}:${JSON.stringify(args)}`;
+          let json = JSON.stringify(args);
             if (map.has(json)) {
                 return map.get(json);
             } else {
