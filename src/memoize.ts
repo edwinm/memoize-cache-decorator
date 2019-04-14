@@ -1,4 +1,8 @@
-export function memoize() {
+export interface Config {
+	resolver?: (...args: any[]) => string | number;
+}
+
+export function memoize(config: Config = {}) {
 	return function(
 		target: object,
 		propertyName: string,
@@ -8,12 +12,15 @@ export function memoize() {
 		const map = new Map();
 
 		propertyDesciptor.value = function(...args) {
-			let json = JSON.stringify(args);
-			if (map.has(json)) {
-				return map.get(json);
+			let key;
+			key = config.resolver
+				? config.resolver.apply(this, args)
+				: JSON.stringify(args);
+			if (map.has(key)) {
+				return map.get(key);
 			} else {
 				const result = fn.apply(this, args);
-				map.set(json, result);
+				map.set(key, result);
 				return result;
 			}
 		};

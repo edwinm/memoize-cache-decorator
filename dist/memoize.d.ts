@@ -1,1 +1,4 @@
-export declare function memoize(): (target: object, propertyName: string, propertyDesciptor: PropertyDescriptor) => PropertyDescriptor;
+export interface Config {
+    resolver?: (...args: any[]) => string | number;
+}
+export declare function memoize(config?: Config): (target: object, propertyName: string, propertyDesciptor: PropertyDescriptor) => PropertyDescriptor;
