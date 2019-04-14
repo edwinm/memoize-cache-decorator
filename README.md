@@ -2,6 +2,14 @@
 
 > Memoize methods
 
+Add `@memoize()`  to your class methods to have the result cached
+for future method calls.
+
+With support for:
+- Custom resolver function
+- Methods and getters
+- TypeScript support
+
 ## Usage
 
 ```js
@@ -27,6 +35,9 @@ class Example {
 
 const example = new Example();
 
+// Instead of a different random number for each call, the first,
+// cached number is returned each time.
+
 console.log(example.myFunction());
 //=> 0.7649863352328616
 console.log(example.myFunction());
@@ -39,11 +50,17 @@ console.log(example.myFunction());
 
 ### @memoize(config)
 
-Memoize the function below it.
+Memoize the class methof or getter below it.
 
 #### amount
 
 Type: \[optional\] `Config`
+
+```js
+interface Config {
+	resolver?: (...args: any[]) => string | number;
+}
+```
 
 ##### resolver \[optional\]
 

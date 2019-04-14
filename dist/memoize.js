@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function memoize(config) {
     if (config === void 0) { config = {}; }
     return function (target, propertyName, propertyDesciptor) {
-        var fn = propertyDesciptor.value;
+        var prop = propertyDesciptor.value ? "value" : "get";
+        var fn = propertyDesciptor[prop];
         var map = new Map();
-        propertyDesciptor.value = function () {
+        propertyDesciptor[prop] = function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];

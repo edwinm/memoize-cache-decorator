@@ -8,10 +8,12 @@ export function memoize(config: Config = {}) {
 		propertyName: string,
 		propertyDesciptor: PropertyDescriptor
 	): PropertyDescriptor {
-		const fn = propertyDesciptor.value;
+		const prop = propertyDesciptor.value ? "value" : "get";
+
+		const fn = propertyDesciptor[prop];
 		const map = new Map();
 
-		propertyDesciptor.value = function(...args) {
+		propertyDesciptor[prop] = function(...args) {
 			let key;
 			key = config.resolver
 				? config.resolver.apply(this, args)

@@ -8,10 +8,6 @@ interface IObject {
 class Example {
 	a: number;
 
-	constructor() {
-		this.a = 10;
-	}
-
 	@memoize()
 	getProjects(id: number, direction: string) {
 		return `getProjects(${id}, "${direction}"); a=${this.a}`;
@@ -26,6 +22,11 @@ class Example {
 	setElement(el: IObject) {
 		return `setElement(el); el.id=${el.id}; el.irrelevant=${el.irrelevant}`;
 	}
+
+	@memoize()
+	get aa() {
+		return `get a; a=${this.a}`;
+	}
 }
 
 let example;
@@ -35,12 +36,14 @@ beforeEach(() => {
 });
 
 it("Test function call", () => {
+	example.a = 10;
 	expect(example.getProjects(20, "south")).toEqual(
 		'getProjects(20, "south"); a=10'
 	);
 });
 
 it("Test memoize", () => {
+	example.a = 10;
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
 	example.a++;
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
@@ -48,6 +51,13 @@ it("Test memoize", () => {
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
 	example.a++;
 	expect(example.getA(21, "south")).toEqual('getA(21, "south"); a=13');
+});
+
+it("Test getter", () => {
+	example.a = 10;
+	expect(example.aa).toEqual('get a; a=10');
+	example.a++;
+	expect(example.aa).toEqual('get a; a=10');
 });
 
 it("Test objectId", () => {
