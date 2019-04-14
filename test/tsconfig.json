@@ -10,5 +10,5 @@
         "moduleResolution": "node"
 
 	},
-	"files": ["test.ts"]
+	"files": ["test.ts", "example.ts"]
 }
