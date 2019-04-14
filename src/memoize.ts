@@ -1,6 +1,6 @@
 export function memoize() {
 	return function(
-		target: Object,
+		target: object,
 		propertyName: string,
 		propertyDesciptor: PropertyDescriptor
 	): PropertyDescriptor {

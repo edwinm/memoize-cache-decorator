@@ -3,10 +3,12 @@
 	"version": "1.0.0",
 	"description": "Cache the result of a function.",
 	"license": "MIT",
-	"main": "memoize.ts",
+	"main": "dist/memoize.js",
+	"types": "dist/memoize.d.ts",
 	"sideEffects": false,
 	"scripts": {
-		"test": "npx tsc && npx jest test/test.js",
+		"build": "npx tsc -d -outDir dist",
+		"test": "npx tsc -p test/tsconfig.json -outDir test && npx jest test/test.js",
 		"coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
 	},
 	"keywords": [
@@ -23,7 +25,10 @@
 		"url": "https://bitstorm.org/"
 	},
 	"files": [
-		"memoize.ts"
+		"src/memoize.ts",
+		"dist/memoize.js",
+		"dist/memoize.d.ts",
+		"dist/memoize.js.map"
 	],
 	"repository": {
 		"type": "git",

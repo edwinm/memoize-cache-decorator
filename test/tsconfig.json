@@ -1,14 +1,14 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
+        "declaration": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "lib": ["dom", "es6"],
         "module": "commonjs",
         "target": "es5",
-        "moduleResolution": "node",
-		"sourceMap": true
+        "moduleResolution": "node"
 
 	},
-	"files": ["src/memoize.ts"]
+	"files": ["test.ts"]
 }
