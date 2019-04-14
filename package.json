@@ -10,7 +10,7 @@
 		"build": "npx tsc -d -outDir dist",
 		"test": "npx tsc -p test/tsconfig.json -outDir test && npx jest test/test.js",
 		"example": "npx tsc -p test/tsconfig.json -outDir test && node test/example.js",
-		"coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls"
+		"coveralls": "jest --coverage test/test.js && cat ./coverage/lcov.info | coveralls"
 	},
 	"keywords": [
 		"memoize",
