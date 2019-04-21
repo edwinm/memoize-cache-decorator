@@ -1,5 +1,12 @@
+/**!
+ @preserve memoize-decorator 1.1.0
+ @copyright 2019 Edwin Martin
+ @license MIT
+ */
+
 export interface Config {
 	resolver?: (...args: any[]) => string | number;
+	ttl?: number;
 }
 
 export function memoize(config: Config = {}) {
@@ -8,21 +15,25 @@ export function memoize(config: Config = {}) {
 		propertyName: string,
 		propertyDesciptor: PropertyDescriptor
 	): PropertyDescriptor {
+		let timeout = Infinity;
 		const prop = propertyDesciptor.value ? "value" : "get";
 
 		const fn = propertyDesciptor[prop];
 		const map = new Map();
 
 		propertyDesciptor[prop] = function(...args) {
-			let key;
-			key = config.resolver
+			let key = config.resolver
 				? config.resolver.apply(this, args)
 				: JSON.stringify(args);
-			if (map.has(key)) {
+
+			if (map.has(key) && (!config.ttl || timeout > Date.now())) {
 				return map.get(key);
 			} else {
 				const result = fn.apply(this, args);
 				map.set(key, result);
+				if (config.ttl) {
+					timeout = Date.now() + config.ttl;
+				}
 				return result;
 			}
 		};

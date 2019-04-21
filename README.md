@@ -1,17 +1,17 @@
 [![Build status](https://api.travis-ci.org/edwinm/memoize-decorator.svg?branch=master)](https://travis-ci.org/edwinm/memoize-decorator) [![Coverage Status](https://coveralls.io/repos/github/edwinm/memoize-decorator/badge.svg?branch=master)](https://coveralls.io/github/edwinm/memoize-decorator?branch=master) [![GitHub](https://img.shields.io/github/license/edwinm/memoize-decorator.svg)](https://github.com/edwinm/memoize-decorator/blob/master/LICENSE) [![CodeFactor](https://www.codefactor.io/repository/github/edwinm/memoize-decorator/badge)](https://www.codefactor.io/repository/github/edwinm/memoize-decorator)
 # memoize-decorator
 
-# memoize-decorator
+> Add `@memoize()`  to your class methods to have the result cached
+for future calls.
 
-> Memoize methods
-
-Add `@memoize()`  to your class methods to have the result cached
-for future method calls.
+This is useful for methods that are resource intensive or take a long time,
+for example doing heavy calculations, network requests or database operations.
 
 With support for:
 - Custom resolver function
 - Methods and getters
 - TypeScript support
+- Cache expiration
 
 ## Usage
 
@@ -24,7 +24,7 @@ class Example {
 }
 ```
 
-Simple practical example:
+Simple example:
 
 ```js
 import { memoize } from "memoize-decorator";
@@ -53,7 +53,7 @@ console.log(example.myFunction());
 
 ### @memoize(config)
 
-Memoize the class methof or getter below it.
+Memoize the class method or getter below it.
 
 #### amount
 
@@ -62,12 +62,13 @@ Type: \[optional\] `Config`
 ```js
 interface Config {
 	resolver?: (...args: any[]) => string | number;
+	ttl?: number;
 }
 ```
 
-##### resolver \[optional\]
+##### resolver \[optional\] function
 
-Function to convert function arguments to a key, which can be a string or a number.
+Function to convert function arguments to a unique key.
 
 Without a `resolver` function, the arguments are converted to a key with JSON stringify.
 This works fine when the arguments are primitives like string and number.
@@ -84,6 +85,23 @@ class Example {
 	myFunction(el) {
 		// el is some complex object
 		return fetch(`/rest/example/${el.id}`);
+	}
+}
+```
+
+##### ttl \[optional\] number
+
+With ttl (time to live), the cache will never live longer than
+the given number of milliseconds.
+
+```js
+import { memoize } from "memoize-decorator";
+
+class Example {
+	// The result is cached for at most 10 minutes
+	@memoize({ ttl: 10 * 60 * 1000 })
+	getComments() {
+		return fetch(`/rest/example/comments`);
 	}
 }
 ```
