@@ -5,6 +5,7 @@
  @license MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+var cacheMap = new Map();
 function memoize(config) {
     if (config === void 0) { config = {}; }
     return function (target, propertyName, propertyDesciptor) {
@@ -32,8 +33,16 @@ function memoize(config) {
                 return result;
             }
         };
+        cacheMap.set(propertyDesciptor[prop], map);
         return propertyDesciptor;
     };
 }
 exports.memoize = memoize;
+function clear(fn) {
+    var map = cacheMap.get(fn);
+    if (map) {
+        map.clear();
+    }
+}
+exports.clear = clear;
 //# sourceMappingURL=memoize.js.map

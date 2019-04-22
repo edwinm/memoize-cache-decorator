@@ -12,6 +12,7 @@ With support for:
 - Methods and getters
 - TypeScript support
 - Cache expiration
+- Clear cache
 
 ## Usage
 
@@ -55,9 +56,7 @@ console.log(example.myFunction());
 
 Memoize the class method or getter below it.
 
-#### amount
-
-Type: \[optional\] `Config`
+#### Type: \[optional\] `Config`
 
 ```js
 interface Config {
@@ -102,6 +101,27 @@ class Example {
 	@memoize({ ttl: 10 * 60 * 1000 })
 	getComments() {
 		return fetch(`/rest/example/comments`);
+	}
+}
+```
+
+### clear(fn)
+
+Clears the cache belonging to a memoized function.
+
+```js
+import { memoize, clear } from "memoize-decorator";
+
+class Example {
+	@memoize()
+	getComments() {
+		return fetch(`/rest/example/comments`);
+	}
+	
+	commentsUpdated() {
+		// The next time getComments() is called, comments will
+		// be fetched from the server.
+		clear(this.getComments);
 	}
 }
 ```

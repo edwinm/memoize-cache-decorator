@@ -8,3 +8,4 @@ export interface Config {
     ttl?: number;
 }
 export declare function memoize(config?: Config): (target: object, propertyName: string, propertyDesciptor: PropertyDescriptor) => PropertyDescriptor;
+export declare function clear(fn: () => any): void;

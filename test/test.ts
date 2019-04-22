@@ -1,4 +1,4 @@
-import { memoize } from "../";
+import { memoize, clear } from "../";
 
 interface IObject {
 	id: number;
@@ -102,4 +102,15 @@ it("Test ttl", async (done) => {
 	example.a++;
 	expect(example.expiring()).toEqual("a=14");
 	done();
+});
+
+it("Test clear", () => {
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
+	example.a++;
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
+	example.a++;
+	clear(example.getA);
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=12');
+	example.a++;
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=12');
 });
