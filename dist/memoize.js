@@ -1,6 +1,6 @@
 "use strict";
 /**!
- @preserve memoize-decorator 1.1.0
+ @preserve memoize-decorator 1.3.0
  @copyright 2019 Edwin Martin
  @license MIT
  */
@@ -11,7 +11,7 @@ function memoize(config) {
     return function (target, propertyName, propertyDesciptor) {
         var timeout = Infinity;
         var prop = propertyDesciptor.value ? "value" : "get";
-        var fn = propertyDesciptor[prop];
+        var originalFunction = propertyDesciptor[prop];
         var map = new Map();
         propertyDesciptor[prop] = function () {
             var args = [];
@@ -25,7 +25,7 @@ function memoize(config) {
                 return map.get(key);
             }
             else {
-                var result = fn.apply(this, args);
+                var result = originalFunction.apply(this, args);
                 map.set(key, result);
                 if (config.ttl) {
                     timeout = Date.now() + config.ttl;
