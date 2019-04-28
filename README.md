@@ -1,5 +1,5 @@
 [![Build status](https://api.travis-ci.org/edwinm/memoize-decorator.svg?branch=master)](https://travis-ci.org/edwinm/memoize-decorator) [![Coverage Status](https://coveralls.io/repos/github/edwinm/memoize-decorator/badge.svg?branch=master)](https://coveralls.io/github/edwinm/memoize-decorator?branch=master) [![npm version](https://badge.fury.io/js/memoize-cache-decorator.svg)](https://www.npmjs.com/package/memoize-cache-decorator) [![GitHub](https://img.shields.io/github/license/edwinm/memoize-decorator.svg)](https://github.com/edwinm/memoize-decorator/blob/master/LICENSE) [![CodeFactor](https://www.codefactor.io/repository/github/edwinm/memoize-decorator/badge)](https://www.codefactor.io/repository/github/edwinm/memoize-decorator)
-# memoize-decorator
+# memoize-cache-decorator
 
 > Add the memoize decorator to your class methods to have the results cached
 for future calls.
