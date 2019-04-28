@@ -7,7 +7,7 @@ for future calls.
 This is an easy, clean and reliable way to prevent unnecessary resource intensive
 tasks and improve the performance of your code.
 
-Examples of resource intensive tasks are:
+Examples of resource intensive tasks that can be cached are:
 heavy calculations, network requests, file system operations and database operations.
 
 With support for:
@@ -15,10 +15,10 @@ With support for:
 - Methods and getter functions
 - TypeScript support
 - Cache expiration
-- Clear cache
+- Clearing the cache
 
-## Install
-
+## Installation
+	
 ```bash
 npm install memoize-cache-decorator
 ```

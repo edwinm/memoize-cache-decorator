@@ -1,6 +1,6 @@
 "use strict";
 /**!
- @preserve memoize-decorator 1.3.0
+ @preserve memoize-decorator 1.3.1
  @copyright 2019 Edwin Martin
  @license MIT
  */
