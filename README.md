@@ -4,7 +4,7 @@
 > Add the memoize decorator to your class methods to have the results cached
 for future calls.
 
-This is an easy, clean and reliable way to prevent unnecessary resource intensive
+This is an easy, clean and reliable way to prevent repeating unnecessary resource intensive
 tasks and improve the performance of your code.
 
 Examples of resource intensive tasks that can be cached are:
@@ -14,6 +14,7 @@ With support for:
 - Custom resolver function
 - Methods and getter functions
 - TypeScript support
+- For Node.js and browsers
 - Cache expiration
 - Clearing the cache
 
@@ -80,7 +81,7 @@ Function to convert function arguments to a unique key.
 
 Without a `resolver` function, the arguments are converted to a key with JSON stringify.
 This works fine when the arguments are primitives like string and number.
-This is undesirable when passing objects with irrelevant of circular data, like DOM elements.
+This is undesirable when passing in objects with irrelevant of circular data, like DOM elements.
 Use `resolver` to provide a function to calculate a unique key yourself.
 
 Example:
@@ -117,6 +118,8 @@ class Example {
 ### clear(fn)
 
 Clears the cache belonging to a memoized function.
+
+Call `clear` with the memoized function as argument.
 
 ```js
 import { memoize, clear } from "memoize-cache-decorator";

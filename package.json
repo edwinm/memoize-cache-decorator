@@ -1,7 +1,7 @@
 {
 	"name": "memoize-cache-decorator",
 	"version": "1.3.1",
-	"description": "Cache the result of a function.",
+	"description": "Cache the result of a method or getter for better performance. Supports timeout and clearing of the cache.",
 	"license": "MIT",
 	"main": "dist/memoize.js",
 	"types": "dist/memoize.d.ts",
