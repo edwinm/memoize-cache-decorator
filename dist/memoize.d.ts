@@ -1,6 +1,6 @@
 /**!
- @preserve memoize-decorator 1.3.1
- @copyright 2019 Edwin Martin
+ @preserve memoize-decorator 1.3.2
+ @copyright 2020 Edwin Martin
  @license MIT
  */
 export interface Config {
