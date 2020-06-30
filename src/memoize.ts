@@ -15,15 +15,15 @@ export function memoize(config: Config = {}) {
 	return function(
 		target: object,
 		propertyName: string,
-		propertyDesciptor: PropertyDescriptor
+		propertyDescriptor: PropertyDescriptor
 	): PropertyDescriptor {
 		let timeout = Infinity;
-		const prop = propertyDesciptor.value ? "value" : "get";
+		const prop = propertyDescriptor.value ? "value" : "get";
 
-		const originalFunction = propertyDesciptor[prop];
+		const originalFunction = propertyDescriptor[prop];
 		const map = new Map();
 
-		propertyDesciptor[prop] = function(...args) {
+		propertyDescriptor[prop] = function(...args) {
 			let key = config.resolver
 				? config.resolver.apply(this, args)
 				: JSON.stringify(args);
@@ -40,9 +40,9 @@ export function memoize(config: Config = {}) {
 			}
 		};
 
-		cacheMap.set(propertyDesciptor[prop], map);
+		cacheMap.set(propertyDescriptor[prop], map);
 
-		return propertyDesciptor;
+		return propertyDescriptor;
 	};
 }
 
