@@ -19,9 +19,9 @@ With support for:
 - Clearing the cache
 
 ## Installation
-	
+
 ```bash
-npm install memoize-cache-decorator
+npm install --save-dev memoize-cache-decorator
 ```
 
 ## Usage
@@ -129,7 +129,7 @@ class Example {
 	getComments() {
 		return fetch(`/rest/example/comments`);
 	}
-	
+
 	commentsUpdated() {
 		// The next time getComments() is called, comments will
 		// be fetched from the server.
