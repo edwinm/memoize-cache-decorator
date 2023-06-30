@@ -17,7 +17,7 @@ var Example = /** @class */ (function () {
         return Math.random();
     };
     __decorate([
-        __1.memoize(),
+        (0, __1.memoize)(),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", void 0)

@@ -87,7 +87,7 @@ it("Test resolver", () => {
 	);
 });
 
-it("Test ttl", async (done) => {
+it("Test ttl", async () => {
 	expect(example.expiring()).toEqual("a=10");
 	example.a++;
 	expect(example.expiring()).toEqual("a=10");
@@ -101,7 +101,6 @@ it("Test ttl", async (done) => {
 	expect(example.expiring()).toEqual("a=14");
 	example.a++;
 	expect(example.expiring()).toEqual("a=14");
-	done();
 });
 
 it("Test clear", () => {

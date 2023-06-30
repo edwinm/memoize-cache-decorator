@@ -1,19 +1,20 @@
 "use strict";
 /**!
- @preserve memoize-decorator 1.3.2
+ @preserve memoize-decorator 1.3.3
  @copyright 2020 Edwin Martin
  @license MIT
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.clear = exports.memoize = void 0;
 var cacheMap = new Map();
 function memoize(config) {
     if (config === void 0) { config = {}; }
-    return function (target, propertyName, propertyDesciptor) {
+    return function (target, propertyName, propertyDescriptor) {
         var timeout = Infinity;
-        var prop = propertyDesciptor.value ? "value" : "get";
-        var originalFunction = propertyDesciptor[prop];
+        var prop = propertyDescriptor.value ? "value" : "get";
+        var originalFunction = propertyDescriptor[prop];
         var map = new Map();
-        propertyDesciptor[prop] = function () {
+        propertyDescriptor[prop] = function () {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
@@ -33,8 +34,8 @@ function memoize(config) {
                 return result;
             }
         };
-        cacheMap.set(propertyDesciptor[prop], map);
-        return propertyDesciptor;
+        cacheMap.set(propertyDescriptor[prop], map);
+        return propertyDescriptor;
     };
 }
 exports.memoize = memoize;
