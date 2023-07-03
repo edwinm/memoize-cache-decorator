@@ -11,7 +11,7 @@ Examples of resource intensive tasks that can be cached are:
 heavy calculations, network requests, file system operations and database operations.
 
 With support for:
-- For Node.js and browsers
+- For Node.js and browsers (Node.js only as module for now, working on commonjs version)
 - Methods and getter functions
 - Cache expiration
 - Clearing the cache
@@ -59,6 +59,8 @@ console.log(example.myFunction());
 console.log(example.myFunction());
 //=> 0.7649863352328616
 ```
+
+In practice, the function would probably do a fetch or a database call.
 
 ## API
 
