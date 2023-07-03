@@ -11,12 +11,12 @@ Examples of resource intensive tasks that can be cached are:
 heavy calculations, network requests, file system operations and database operations.
 
 With support for:
-- Custom resolver function
-- Methods and getter functions
-- TypeScript support
 - For Node.js and browsers
+- Methods and getter functions
 - Cache expiration
 - Clearing the cache
+- Custom resolver function
+- TypeScript support
 
 ## Installation
 
