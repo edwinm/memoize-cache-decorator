@@ -1,6 +1,6 @@
 {
 	"name": "memoize-cache-decorator",
-	"version": "1.3.3",
+	"version": "1.3.4",
 	"description": "Cache the result of a method or getter for better performance. Supports timeout and clearing of the cache.",
 	"license": "MIT",
 	"main": "dist/memoize.js",
@@ -9,7 +9,8 @@
 	"scripts": {
 		"prepare": "husky install",
 		"build": "tsc",
-		"test": "tsc -p test/tsconfig.json -outDir test && npx jest test/test.js",
+		"test": "tsc -p test/tsconfig.json -outDir test && jest test/test.js",
+		"demo": "tsc -p demo/tsconfig.json -outDir demo && node demo/demo.js",
 		"coveralls": "jest --coverage test/test.js && cat ./coverage/lcov.info | coveralls",
 		"prettier": "prettier --config .prettierrc.json src/*.ts *.json *.cjs --write",
 		"lint": "eslint . --ext .ts"

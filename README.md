@@ -13,12 +13,14 @@ heavy calculations, network requests, file system operations and database operat
 
 With support for:
 
-- For Node.js and browsers (Node.js only as module for now, working on commonjs version)
+- Node.js and browsers
 - Methods and getter functions
 - Cache expiration
 - Clearing the cache
 - Custom resolver function
-- TypeScript support
+
+Since TypeScript decorators are used, the source has to be TypeScript.
+Plain JavaScript decorators are planned for the future.
 
 ## Installation
 
@@ -28,7 +30,7 @@ npm install --save-dev memoize-cache-decorator
 
 ## Usage
 
-```js
+```ts
 class Example {
 	@memoize()
 	myFunction() {
@@ -39,7 +41,7 @@ class Example {
 
 Simple example:
 
-```js
+```ts
 import { memoize } from "memoize-cache-decorator";
 
 class Example {
@@ -72,7 +74,7 @@ Memoize the class method or getter below it.
 
 #### Type: \[optional\] `Config`
 
-```js
+```ts
 interface Config {
 	resolver?: (...args: any[]) => string | number;
 	ttl?: number;
@@ -90,7 +92,7 @@ Use `resolver` to provide a function to calculate a unique key yourself.
 
 Example:
 
-```js
+```ts
 import { memoize } from "memoize-cache-decorator";
 
 class Example {
@@ -107,7 +109,7 @@ class Example {
 With ttl (time to live), the cache will never live longer than
 the given number of milliseconds.
 
-```js
+```ts
 import { memoize } from "memoize-cache-decorator";
 
 class Example {
@@ -125,7 +127,7 @@ Clears the cache belonging to a memoized function.
 
 Call `clear` with the memoized function as argument.
 
-```js
+```ts
 import { memoize, clear } from "memoize-cache-decorator";
 
 class Example {

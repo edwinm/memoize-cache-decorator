@@ -1,13 +1,13 @@
 import { memoize } from "../";
 
-class Example {
+class Demo {
 	@memoize()
 	myFunction() {
 		return Math.random();
 	}
 }
 
-const example = new Example();
+const example = new Demo();
 
 console.log(example.myFunction());
 console.log(example.myFunction());
