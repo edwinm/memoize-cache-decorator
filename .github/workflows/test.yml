@@ -1,30 +1,40 @@
-name: Test
-
 on: ["push", "pull_request"]
+
+name: Test Coveralls Parallel
 
 jobs:
   test:
-    name: Run units tests
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        test_number:
+          - 1
+          - 2
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@3
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@3
         with:
-          node-version: "16"
+          node-version: 16.x
 
-      - name: Install
+      - name: npm install
         run: npm install
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Test with Coveralls
-        run: npm run test
-
-      - name: Coveralls
+      - name: Test ${{ matrix.test_number }}
+        run: make test-coverage-${{ matrix.test_number }}
+      - name: Coveralls Parallel
         uses: coverallsapp/github-action@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: run-${{ join(matrix.*, '-') }}
+          parallel: true
+
+  finish:
+    needs: test
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true
+          carryforward: "run-1,run-2"
