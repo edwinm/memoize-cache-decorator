@@ -1,50 +1,30 @@
-name: "CodeQL"
+name: Test
 
-on:
-  push:
-    branches: ["master"]
-  pull_request:
-    branches: ["master"]
-  schedule:
-    - cron: "11 3 * * 3"
+on: ["push", "pull_request"]
 
 jobs:
-  analyze:
-    name: Analyze
+  test:
+    name: Run units tests
     runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [javascript]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          languages: ${{ matrix.language }}
-          queries: +security-and-quality
+          node-version: "16"
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
+      - name: Install
+        run: npm install
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-        with:
-          category: "/language:${{ matrix.language }}"
+      - name: Lint
+        run: npm run lint
 
-      - name: Run tests
+      - name: Test with Coveralls
         run: npm run test:coveralls
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: ${{matrix.os}}-node-${{ matrix.node }}
