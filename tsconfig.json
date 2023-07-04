@@ -1,15 +1,16 @@
 {
-    "compilerOptions": {
+	"compilerOptions": {
 		"strict": true,
-        "allowSyntheticDefaultImports": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "lib": ["dom", "es6"],
-        "module": "commonjs",
-        "target": "es5",
-        "moduleResolution": "node",
+		"allowSyntheticDefaultImports": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"lib": ["dom", "es6"],
+		"module": "commonjs",
+		"target": "es5",
+		"moduleResolution": "node",
 		"sourceMap": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"outDir": "dist"
 	},
 	"files": ["src/memoize.ts"]
 }

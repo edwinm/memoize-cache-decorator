@@ -7,10 +7,12 @@
 	"types": "dist/memoize.d.ts",
 	"sideEffects": false,
 	"scripts": {
-		"build": "npx tsc -d -outDir dist",
-		"test": "npx tsc -p test/tsconfig.json -outDir test && npx jest test/test.js",
-		"example": "npx tsc -p test/tsconfig.json -outDir test && node test/example.js",
-		"coveralls": "jest --coverage test/test.js && cat ./coverage/lcov.info | coveralls"
+		"prepare": "husky install",
+		"build": "tsc",
+		"test": "tsc -p test/tsconfig.json -outDir test && npx jest test/test.js",
+		"coveralls": "jest --coverage test/test.js && cat ./coverage/lcov.info | coveralls",
+		"prettier": "prettier --config .prettierrc.json src/*.ts *.json *.cjs --write",
+		"lint": "eslint . --ext .ts"
 	},
 	"keywords": [
 		"memoize",
@@ -40,9 +42,15 @@
 	},
 	"devDependencies": {
 		"@types/jest": "^29.5.2",
+		"@typescript-eslint/eslint-plugin": "^5.61.0",
+		"@typescript-eslint/parser": "^5.61.0",
 		"coveralls": "^3.1.1",
+		"eslint": "^8.44.0",
+		"eslint-config-prettier": "^8.8.0",
+		"husky": "^8.0.3",
 		"jest": "^29.5.0",
+		"prettier": "^2.8.8",
+		"pretty-quick": "^3.1.3",
 		"typescript": "^5.1.6"
-	},
-	"dependencies": {}
+	}
 }

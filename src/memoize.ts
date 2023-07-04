@@ -12,7 +12,7 @@ export interface Config {
 }
 
 export function memoize(config: Config = {}) {
-	return function(
+	return function (
 		target: object,
 		propertyName: string,
 		propertyDescriptor: PropertyDescriptor
@@ -23,8 +23,8 @@ export function memoize(config: Config = {}) {
 		const originalFunction = propertyDescriptor[prop];
 		const map = new Map();
 
-		propertyDescriptor[prop] = function(...args: any[]) {
-			let key = config.resolver
+		propertyDescriptor[prop] = function (...args: any[]) {
+			const key = config.resolver
 				? config.resolver.apply(this, args)
 				: JSON.stringify(args);
 
