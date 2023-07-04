@@ -1,8 +1,9 @@
-[![Build status](https://api.travis-ci.com/edwinm/memoize-cache-decorator.svg?branch=master)](https://app.travis-ci.com/github/edwinm/memoize-cache-decorator) [![Coverage Status](https://coveralls.io/repos/github/edwinm/memoize-cache-decorator/badge.svg?branch=master)](https://coveralls.io/github/edwinm/memoize-cache-decorator?branch=master) [![Socket Badge](https://socket.dev/api/badge/npm/package/memoize-cache-decorator)](https://socket.dev/npm/package/memoize-cache-decorator) [![npm version](https://badge.fury.io/js/memoize-cache-decorator.svg)](https://www.npmjs.com/package/memoize-cache-decorator) [![GitHub](https://img.shields.io/github/license/edwinm/memoize-cache-decorator.svg)](https://github.com/edwinm/memoize-cache-decorator/blob/master/LICENSE) [![CodeFactor](https://www.codefactor.io/repository/github/edwinm/memoize-cache-decorator/badge)](https://www.codefactor.io/repository/github/edwinm/memoize-cache-decorator)
+[![Build status](https://github.com/edwinm/memoize-cache-decorator/actions/workflows/codeql.yml/badge.svg)](https://github.com/edwinm/memoize-cache-decorator/actions/workflows/codeql.yml) [![Coverage Status](https://coveralls.io/repos/github/edwinm/memoize-cache-decorator/badge.svg?branch=master)](https://coveralls.io/github/edwinm/memoize-cache-decorator?branch=master) [![Socket Badge](https://socket.dev/api/badge/npm/package/memoize-cache-decorator)](https://socket.dev/npm/package/memoize-cache-decorator) [![npm version](https://badge.fury.io/js/memoize-cache-decorator.svg)](https://www.npmjs.com/package/memoize-cache-decorator) [![GitHub](https://img.shields.io/github/license/edwinm/memoize-cache-decorator.svg)](https://github.com/edwinm/memoize-cache-decorator/blob/master/LICENSE) [![CodeFactor](https://www.codefactor.io/repository/github/edwinm/memoize-cache-decorator/badge)](https://www.codefactor.io/repository/github/edwinm/memoize-cache-decorator)
+
 # memoize-cache-decorator
 
 > Add the memoize decorator to your class methods to have the results cached
-for future calls.
+> for future calls.
 
 This is an easy, clean and reliable way to prevent repeating unnecessary resource intensive
 tasks and improve the performance of your code.
@@ -11,6 +12,7 @@ Examples of resource intensive tasks that can be cached are:
 heavy calculations, network requests, file system operations and database operations.
 
 With support for:
+
 - For Node.js and browsers (Node.js only as module for now, working on commonjs version)
 - Methods and getter functions
 - Cache expiration
