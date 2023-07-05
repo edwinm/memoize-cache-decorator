@@ -9,7 +9,8 @@
 	"scripts": {
 		"prepare": "husky install",
 		"build": "tsc",
-		"test": "tsc -p test/tsconfig.json -outDir test && jest --coverage test/test.js && coveralls < coverage/lcov.info",
+		"test": "tsc -p test/tsconfig.json -outDir test && jest test/test.js",
+		"test:coverage": "tsc -p test/tsconfig.json -outDir test && jest --coverage test/test.js && coveralls < coverage/lcov.info",
 		"demo": "tsc -p demo/tsconfig.json -outDir demo && node demo/demo.js",
 		"prettier": "prettier --config .prettierrc.json src/*.ts **/*.{json,cjs,yml} --write",
 		"lint": "eslint . --ext .ts"
