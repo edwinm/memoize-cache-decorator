@@ -16,7 +16,7 @@ jobs:
           node-version: "16"
 
       - name: Install
-        run: npm install
+        run: npm ci
 
       - name: Lint
         run: npm run lint
