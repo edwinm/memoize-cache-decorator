@@ -1,8 +1,10 @@
 /**!
- @preserve memoize-decorator 1.4.0
+ @preserve memoize-decorator 1.5.0
  @copyright 2023 Edwin Martin
  @license MIT
  */
+
+import stringify from "json-stringify-safe";
 
 const cacheMap = new Map();
 
@@ -26,7 +28,7 @@ export function memoize(config: Config = {}) {
 		propertyDescriptor[prop] = function (...args: any[]) {
 			const key = config.resolver
 				? config.resolver.apply(this, args)
-				: JSON.stringify(args);
+				: stringify(args);
 
 			if (map.has(key) && (!config.ttl || timeout > Date.now())) {
 				return map.get(key);
