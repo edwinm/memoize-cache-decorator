@@ -32,8 +32,13 @@ class Example {
 		return `get a; a=${this.a}`;
 	}
 
-	@memoize({ ttl: 50 })
-	expiring() {
+	@memoize({ ttl: 40 })
+	expiring40() {
+		return `a=${this.a}`;
+	}
+
+	@memoize({ ttl: 60 })
+	expiring60() {
 		return `a=${this.a}`;
 	}
 }
@@ -88,19 +93,29 @@ it("Test resolver", () => {
 });
 
 it("Test ttl", async () => {
-	expect(example.expiring()).toEqual("a=10");
+	const example = new Example();
+	expect(example.expiring40()).toEqual("a=10");
+	expect(example.expiring60()).toEqual("a=10");
 	example.a++;
-	expect(example.expiring()).toEqual("a=10");
-	await new Promise((resolve) => setTimeout(resolve, 100));
+	expect(example.expiring40()).toEqual("a=10");
+	expect(example.expiring60()).toEqual("a=10");
+	await new Promise((resolve) => setTimeout(resolve, 20));
 	example.a++;
-	expect(example.expiring()).toEqual("a=12");
+	expect(example.expiring40()).toEqual("a=10");
+	expect(example.expiring60()).toEqual("a=10");
 	example.a++;
-	expect(example.expiring()).toEqual("a=12");
-	await new Promise((resolve) => setTimeout(resolve, 100));
+	expect(example.expiring40()).toEqual("a=10");
+	expect(example.expiring60()).toEqual("a=10");
+	await new Promise((resolve) => setTimeout(resolve, 30));
 	example.a++;
-	expect(example.expiring()).toEqual("a=14");
+	expect(example.expiring40()).toEqual("a=14");
+	expect(example.expiring60()).toEqual("a=10");
 	example.a++;
-	expect(example.expiring()).toEqual("a=14");
+	expect(example.expiring40()).toEqual("a=14");
+	expect(example.expiring60()).toEqual("a=10");
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	expect(example.expiring40()).toEqual("a=14");
+	expect(example.expiring60()).toEqual("a=15");
 });
 
 it("Test clear", () => {
