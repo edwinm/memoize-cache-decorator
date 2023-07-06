@@ -1,4 +1,4 @@
-import { memoize } from "../";
+import { memoize } from "../dist/memoize.js";
 
 class Demo {
 	@memoize()

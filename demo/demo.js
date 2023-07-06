@@ -1,4 +1,3 @@
-"use strict";
 var __decorate =
 	(this && this.__decorate) ||
 	function (decorators, target, key, desc) {
@@ -24,27 +23,24 @@ var __metadata =
 		if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
 			return Reflect.metadata(k, v);
 	};
-Object.defineProperty(exports, "__esModule", { value: true });
-var __1 = require("../");
-var Demo = /** @class */ (function () {
-	function Demo() {}
-	Demo.prototype.myFunction = function () {
+import { memoize } from "../dist/memoize.js";
+class Demo {
+	myFunction() {
 		return Math.random();
-	};
-	__decorate(
-		[
-			(0, __1.memoize)(),
-			__metadata("design:type", Function),
-			__metadata("design:paramtypes", []),
-			__metadata("design:returntype", void 0),
-		],
-		Demo.prototype,
-		"myFunction",
-		null
-	);
-	return Demo;
-})();
-var example = new Demo();
+	}
+}
+__decorate(
+	[
+		memoize(),
+		__metadata("design:type", Function),
+		__metadata("design:paramtypes", []),
+		__metadata("design:returntype", void 0),
+	],
+	Demo.prototype,
+	"myFunction",
+	null
+);
+const example = new Demo();
 console.log(example.myFunction());
 console.log(example.myFunction());
 console.log(example.myFunction());

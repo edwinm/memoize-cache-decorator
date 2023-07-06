@@ -1,6 +1,6 @@
 /**!
- @preserve memoize-decorator 1.3.4
- @copyright 2020 Edwin Martin
+ @preserve memoize-decorator 1.4.0
+ @copyright 2023 Edwin Martin
  @license MIT
  */
 

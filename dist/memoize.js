@@ -1,32 +1,24 @@
-"use strict";
 /**!
- @preserve memoize-decorator 1.3.4
- @copyright 2020 Edwin Martin
+ @preserve memoize-decorator 1.4.0
+ @copyright 2023 Edwin Martin
  @license MIT
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.clear = exports.memoize = void 0;
-var cacheMap = new Map();
-function memoize(config) {
-    if (config === void 0) { config = {}; }
+const cacheMap = new Map();
+export function memoize(config = {}) {
     return function (target, propertyName, propertyDescriptor) {
-        var timeout = Infinity;
-        var prop = propertyDescriptor.value ? "value" : "get";
-        var originalFunction = propertyDescriptor[prop];
-        var map = new Map();
-        propertyDescriptor[prop] = function () {
-            var args = [];
-            for (var _i = 0; _i < arguments.length; _i++) {
-                args[_i] = arguments[_i];
-            }
-            var key = config.resolver
+        let timeout = Infinity;
+        const prop = propertyDescriptor.value ? "value" : "get";
+        const originalFunction = propertyDescriptor[prop];
+        const map = new Map();
+        propertyDescriptor[prop] = function (...args) {
+            const key = config.resolver
                 ? config.resolver.apply(this, args)
                 : JSON.stringify(args);
             if (map.has(key) && (!config.ttl || timeout > Date.now())) {
                 return map.get(key);
             }
             else {
-                var result = originalFunction.apply(this, args);
+                const result = originalFunction.apply(this, args);
                 map.set(key, result);
                 if (config.ttl) {
                     timeout = Date.now() + config.ttl;
@@ -38,12 +30,10 @@ function memoize(config) {
         return propertyDescriptor;
     };
 }
-exports.memoize = memoize;
-function clear(fn) {
-    var map = cacheMap.get(fn);
+export function clear(fn) {
+    const map = cacheMap.get(fn);
     if (map) {
         map.clear();
     }
 }
-exports.clear = clear;
 //# sourceMappingURL=memoize.js.map

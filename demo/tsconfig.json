@@ -1,12 +1,11 @@
 {
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
-		"declaration": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"lib": ["dom", "es6"],
-		"module": "commonjs",
-		"target": "es5",
+		"lib": ["es6"],
+		"module": "es6",
+		"target": "es6",
 		"moduleResolution": "node"
 	},
 	"files": ["demo.ts"]
