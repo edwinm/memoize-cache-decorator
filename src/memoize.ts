@@ -48,7 +48,7 @@ export function memoize(config: Config = {}) {
 	};
 }
 
-export function clear(fn: () => any) {
+export function clear(fn: (...args: any) => any) {
 	const map = cacheMap.get(fn);
 
 	if (map) {
