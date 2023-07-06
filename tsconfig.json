@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"strict": true,
+		"declaration": true,
 		"allowSyntheticDefaultImports": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
