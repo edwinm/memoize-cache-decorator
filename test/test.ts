@@ -41,6 +41,11 @@ class Example {
 	expiring60() {
 		return `a=${this.a}`;
 	}
+
+	@memoize({ ttl: 40 })
+	expiringArg(str: string) {
+		return `arg=${this.a}-${str}`;
+	}
 }
 
 let example;
@@ -116,6 +121,27 @@ it("Test ttl", async () => {
 	await new Promise((resolve) => setTimeout(resolve, 20));
 	expect(example.expiring40()).toEqual("a=14");
 	expect(example.expiring60()).toEqual("a=15");
+});
+
+it("Test ttl with args", async () => {
+	const example = new Example();
+	expect(example.expiringArg("a")).toEqual("arg=10-a");
+	example.a++;
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	expect(example.expiringArg("a")).toEqual("arg=10-a");
+	expect(example.expiringArg("b")).toEqual("arg=11-b");
+	example.a++;
+	await new Promise((resolve) => setTimeout(resolve, 10));
+	expect(example.expiringArg("a")).toEqual("arg=10-a");
+	expect(example.expiringArg("b")).toEqual("arg=11-b");
+	example.a++;
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	expect(example.expiringArg("a")).toEqual("arg=13-a");
+	expect(example.expiringArg("b")).toEqual("arg=11-b");
+	example.a++;
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	expect(example.expiringArg("a")).toEqual("arg=13-a");
+	expect(example.expiringArg("b")).toEqual("arg=14-b");
 });
 
 it("Test clear", () => {

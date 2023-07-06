@@ -1,5 +1,5 @@
 /**!
- @preserve memoize-decorator 1.5.0
+ @preserve memoize-decorator 1.6.0
  @copyright 2023 Edwin Martin
  @license MIT
  */
@@ -13,33 +13,39 @@ export interface Config {
 	ttl?: number;
 }
 
+interface CacheObject {
+	result: any;
+	timeout: number;
+}
+
 export function memoize(config: Config = {}) {
 	return function (
 		target: object,
 		propertyName: string,
 		propertyDescriptor: PropertyDescriptor
 	): PropertyDescriptor {
-		let timeout = Infinity;
 		const prop = propertyDescriptor.value ? "value" : "get";
 
 		const originalFunction = propertyDescriptor[prop];
-		const map = new Map();
+		const map: Map<string | number, CacheObject> = new Map();
 
 		propertyDescriptor[prop] = function (...args: any[]) {
 			const key = config.resolver
 				? config.resolver.apply(this, args)
 				: stringify(args);
 
-			if (map.has(key) && (!config.ttl || timeout > Date.now())) {
-				return map.get(key);
-			} else {
-				const result = originalFunction.apply(this, args);
-				map.set(key, result);
-				if (config.ttl) {
-					timeout = Date.now() + config.ttl;
+			if (map.has(key)) {
+				const { result, timeout } = map.get(key)!;
+				if (!config.ttl || timeout > Date.now()) {
+					return result;
 				}
-				return result;
 			}
+			const newResult = originalFunction.apply(this, args);
+			map.set(key, {
+				result: newResult,
+				timeout: config.ttl ? Date.now() + config.ttl : Infinity,
+			});
+			return newResult;
 		};
 
 		cacheMap.set(propertyDescriptor[prop], map);
