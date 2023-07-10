@@ -1,40 +1,48 @@
 /**!
- @preserve memoize-decorator 1.6.0
+ @preserve memoize-decorator 1.7.0
  @copyright 2023 Edwin Martin
  @license MIT
  */
 import stringify from "json-stringify-safe";
 const cacheMap = new Map();
+const idPropertySymbol = Symbol();
+let uniqueObjectId = 1;
 export function memoize(config = {}) {
     return function (target, propertyName, propertyDescriptor) {
         const prop = propertyDescriptor.value ? "value" : "get";
         const originalFunction = propertyDescriptor[prop];
-        const map = new Map();
+        const functionCacheMap = new Map();
         propertyDescriptor[prop] = function (...args) {
+            let objectId = this[idPropertySymbol];
+            if (!objectId) {
+                objectId = ++uniqueObjectId;
+                this[idPropertySymbol] = objectId;
+            }
             const key = config.resolver
                 ? config.resolver.apply(this, args)
                 : stringify(args);
-            if (map.has(key)) {
-                const { result, timeout } = map.get(key);
+            const cacheKey = `${objectId}:${key}`;
+            if (functionCacheMap.has(cacheKey)) {
+                const { result, timeout } = functionCacheMap.get(cacheKey);
                 if (!config.ttl || timeout > Date.now()) {
                     return result;
                 }
             }
             const newResult = originalFunction.apply(this, args);
-            map.set(key, {
+            functionCacheMap.set(cacheKey, {
                 result: newResult,
                 timeout: config.ttl ? Date.now() + config.ttl : Infinity,
             });
             return newResult;
         };
-        cacheMap.set(propertyDescriptor[prop], map);
+        cacheMap.set(propertyDescriptor[prop], functionCacheMap);
         return propertyDescriptor;
     };
 }
 export function clear(fn) {
-    const map = cacheMap.get(fn);
-    if (map) {
-        map.clear();
+    const functionCacheMap = cacheMap.get(fn);
+    if (functionCacheMap) {
+        functionCacheMap.clear();
     }
 }
 //# sourceMappingURL=memoize.js.map

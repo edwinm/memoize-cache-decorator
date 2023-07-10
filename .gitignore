@@ -2,3 +2,4 @@
 /.idea
 /test/test.js
 coverage/
+/demo/demo.js
