@@ -47,6 +47,8 @@ import { memoize } from "memoize-cache-decorator";
 class Example {
 	@memoize()
 	myFunction() {
+		// Heavy function getting data from disk, database or a server
+		// For this example we return a random number
 		return Math.random();
 	}
 }
@@ -85,9 +87,10 @@ interface Config {
 
 Function to convert function arguments to a unique key.
 
-Without a `resolver` function, the arguments are converted to a key with JSON stringify.
-This works fine when the arguments are primitives like string and number.
-This is undesirable when passing in objects with irrelevant of circular data, like DOM elements.
+Without a `resolver` function, the arguments are converted to a key with `json-stringify-safe`,
+a save version of JSON stringify.
+This works fine when the arguments are primitives like strings, numbers and booleans.
+This is undesirable when passing in objects with irrelevant data, like DOM elements.
 Use `resolver` to provide a function to calculate a unique key yourself.
 
 Example:
