@@ -46,6 +46,16 @@ class Example {
 	expiringArg(str: string) {
 		return `arg=${this.a}-${str}`;
 	}
+
+	@memoize({ ttl: 30 })
+	expiring30() {
+		return `a=${this.a}`;
+	}
+
+	@memoize({ ttl: 30 })
+	expiring30Arg(str: string) {
+		return `arg=${this.a}-${str}`;
+	}
 }
 
 let example;
@@ -140,6 +150,36 @@ it("Test ttl with args", async () => {
 	await new Promise((resolve) => setTimeout(resolve, 20));
 	expect(example.expiringArg("a")).toEqual("arg=13-a");
 	expect(example.expiringArg("b")).toEqual("arg=14-b");
+});
+
+it("Test ttl over instances", async () => {
+	const example2 = new Example();
+	expect(example.expiring30()).toEqual("a=10");
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	expect(example2.expiring30()).toEqual("a=10");
+	example.a++;
+	example2.a++;
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	expect(example.expiring30()).toEqual("a=11");
+	expect(example2.expiring30()).toEqual("a=11");
+});
+
+it("Test ttl with args over instances", async () => {
+	const example2 = new Example();
+	expect(example.expiring30Arg("a")).toEqual("arg=10-a");
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	expect(example2.expiring30Arg("a")).toEqual("arg=10-a");
+	expect(example.expiring30Arg("b")).toEqual("arg=10-b");
+	example.a++;
+	example2.a++;
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	// example ("a") is expired and clears the cache.
+	// example2 ("a") will profit from new data
+	// example ("b") should not be cleared
+	expect(example.expiring30Arg("a")).toEqual("arg=11-a");
+	expect(example2.expiring30Arg("a")).toEqual("arg=11-a");
+	expect(example.expiring30Arg("b")).toEqual("arg=10-b");
+	expect(example2.expiring30Arg("b")).toEqual("arg=10-b");
 });
 
 it("Test clear", () => {
