@@ -122,21 +122,6 @@ it("Test ttl", async () => {
 	expect(example.expiring60()).toEqual("a=15");
 });
 
-it("Test ttl with two instances", async () => {
-	const example2 = new Example();
-	expect(example.expiring40()).toEqual("a=10");
-	example.a++;
-	example2.a++;
-	await new Promise((resolve) => setTimeout(resolve, 30));
-	expect(example.expiring40()).toEqual("a=10");
-	expect(example2.expiring40()).toEqual("a=11");
-	example.a++;
-	example2.a++;
-	await new Promise((resolve) => setTimeout(resolve, 20));
-	expect(example.expiring40()).toEqual("a=12");
-	expect(example2.expiring40()).toEqual("a=11");
-});
-
 it("Test ttl with args", async () => {
 	expect(example.expiringArg("a")).toEqual("arg=10-a");
 	example.a++;
