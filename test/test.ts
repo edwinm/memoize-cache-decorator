@@ -56,6 +56,15 @@ class Example {
 	expiring30Arg(str: string) {
 		return `arg=${this.a}-${str}`;
 	}
+
+	@memoize({ ttl: 30 })
+	async expiring20Async() {
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(`a=${this.a}`);
+			}, 5);
+		});
+	}
 }
 
 let example;
@@ -180,6 +189,21 @@ it("Test ttl with args over instances", async () => {
 	expect(example2.expiring30Arg("a")).toEqual("arg=11-a");
 	expect(example.expiring30Arg("b")).toEqual("arg=10-b");
 	expect(example2.expiring30Arg("b")).toEqual("arg=10-b");
+});
+
+it("Test ttl with aync function", async () => {
+	const result1 = await example.expiring20Async();
+	expect(result1).toEqual("a=10");
+	example.a++;
+	await new Promise((resolve) => setTimeout(resolve, 10));
+	// Cache is not expired and should return old value
+	const result2 = await example.expiring20Async();
+	expect(result2).toEqual("a=10");
+	example.a++;
+	await new Promise((resolve) => setTimeout(resolve, 30));
+	// Now cache is expired and should return new value
+	const result3 = await example.expiring20Async();
+	expect(result3).toEqual("a=12");
 });
 
 it("Test clear", () => {

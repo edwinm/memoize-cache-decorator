@@ -13,8 +13,9 @@ heavy calculations, network requests, file system operations and database operat
 
 With support for:
 
-- Node.js and browsers
+- Both Node.js and browsers
 - Methods and getter functions
+- Async functions
 - Cache expiration
 - Clearing the cache
 - Custom resolver function
