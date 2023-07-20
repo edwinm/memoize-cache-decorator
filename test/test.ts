@@ -161,34 +161,19 @@ it("Test ttl with args", async () => {
 	expect(example.expiringArg("b")).toEqual("arg=14-b");
 });
 
-it("Test ttl over instances", async () => {
+it("Test ttl with two instances", async () => {
 	const example2 = new Example();
-	expect(example.expiring30()).toEqual("a=10");
-	await new Promise((resolve) => setTimeout(resolve, 20));
-	expect(example2.expiring30()).toEqual("a=10");
+	expect(example.expiring40()).toEqual("a=10");
+	example.a++;
+	example2.a++;
+	await new Promise((resolve) => setTimeout(resolve, 30));
+	expect(example.expiring40()).toEqual("a=10");
+	expect(example2.expiring40()).toEqual("a=11");
 	example.a++;
 	example2.a++;
 	await new Promise((resolve) => setTimeout(resolve, 20));
-	expect(example.expiring30()).toEqual("a=11");
-	expect(example2.expiring30()).toEqual("a=11");
-});
-
-it("Test ttl with args over instances", async () => {
-	const example2 = new Example();
-	expect(example.expiring30Arg("a")).toEqual("arg=10-a");
-	await new Promise((resolve) => setTimeout(resolve, 20));
-	expect(example2.expiring30Arg("a")).toEqual("arg=10-a");
-	expect(example.expiring30Arg("b")).toEqual("arg=10-b");
-	example.a++;
-	example2.a++;
-	await new Promise((resolve) => setTimeout(resolve, 20));
-	// example ("a") is expired and clears the cache.
-	// example2 ("a") will profit from new data
-	// example ("b") should not be cleared
-	expect(example.expiring30Arg("a")).toEqual("arg=11-a");
-	expect(example2.expiring30Arg("a")).toEqual("arg=11-a");
-	expect(example.expiring30Arg("b")).toEqual("arg=10-b");
-	expect(example2.expiring30Arg("b")).toEqual("arg=10-b");
+	expect(example.expiring40()).toEqual("a=12");
+	expect(example2.expiring40()).toEqual("a=11");
 });
 
 it("Test ttl with aync function", async () => {

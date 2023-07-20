@@ -1,5 +1,5 @@
 /**!
- @preserve memoize-decorator 1.8.0
+ @preserve memoize-decorator 1.9.0
  @copyright 2023 Edwin Martin
  @license MIT
  */
