@@ -31,10 +31,7 @@ export function memoize(config: Config = {}) {
 		const originalFunction = propertyDescriptor[prop];
 		const functionCacheMap = new Map<string, CacheObject>();
 
-		propertyDescriptor[prop] = function (
-			this: { [id: symbol]: number },
-			...args: any[]
-		) {
+		propertyDescriptor[prop] = function (...args: any[]) {
 			let objectId = instanceMap.get(this);
 			if (!objectId) {
 				objectId = ++uniqueInstanceId;
