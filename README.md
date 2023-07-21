@@ -16,11 +16,13 @@ With support for:
 - Both Node.js and browsers
 - Methods and getter functions
 - Async functions
+- Static functions
 - Cache expiration
 - Clearing the cache
 - Custom resolver function
 
 Since TypeScript decorators are used, the source has to be TypeScript.
+Also, decorators can only be used for class methods and getters.
 Plain JavaScript decorators are planned for the future.
 
 ## Installation

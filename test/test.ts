@@ -7,6 +7,7 @@ interface IObject {
 
 class Example {
 	a: number;
+	static s: number;
 
 	constructor() {
 		this.a = 10;
@@ -64,6 +65,11 @@ class Example {
 				resolve(`a=${this.a}`);
 			}, 5);
 		});
+	}
+
+	@memoize({ ttl: 30 })
+	static expiring30Static(str: string) {
+		return `arg=${this.s}-${str}`;
 	}
 }
 
@@ -189,6 +195,19 @@ it("Test ttl with aync function", async () => {
 	// Now cache is expired and should return new value
 	const result3 = await example.expiring20Async();
 	expect(result3).toEqual("a=12");
+});
+
+it("Test ttl with static function", async () => {
+	Example.s = 0;
+	expect(Example.expiring30Static("10")).toEqual("arg=0-10");
+	Example.s++;
+	await new Promise((resolve) => setTimeout(resolve, 10));
+	// Cache is not expired and should return old value
+	expect(Example.expiring30Static("10")).toEqual("arg=0-10");
+	Example.s++;
+	await new Promise((resolve) => setTimeout(resolve, 30));
+	// Now cache is expired and should return new value
+	expect(Example.expiring30Static("10")).toEqual("arg=2-10");
 });
 
 it("Test clear", () => {
