@@ -1,22 +1,22 @@
 /**!
- @preserve memoize-decorator 1.9.0
+ @preserve memoize-decorator 1.10.0
  @copyright 2023 Edwin Martin
  @license MIT
  */
 import stringify from "json-stringify-safe";
 const cacheMap = new Map();
-const idPropertySymbol = Symbol();
-let uniqueObjectId = 1;
+const instanceMap = new Map();
+let uniqueInstanceId = 1;
 export function memoize(config = {}) {
     return function (target, propertyName, propertyDescriptor) {
         const prop = propertyDescriptor.value ? "value" : "get";
         const originalFunction = propertyDescriptor[prop];
         const functionCacheMap = new Map();
         propertyDescriptor[prop] = function (...args) {
-            let objectId = this[idPropertySymbol];
+            let objectId = instanceMap.get(this);
             if (!objectId) {
-                objectId = ++uniqueObjectId;
-                this[idPropertySymbol] = objectId;
+                objectId = ++uniqueInstanceId;
+                instanceMap.set(this, objectId);
             }
             const key = config.resolver
                 ? config.resolver.apply(this, args)

@@ -1,5 +1,5 @@
 /**!
- @preserve memoize-decorator 1.9.0
+ @preserve memoize-decorator 1.10.0
  @copyright 2023 Edwin Martin
  @license MIT
  */
@@ -7,8 +7,8 @@
 import stringify from "json-stringify-safe";
 
 const cacheMap = new Map<(...args: any) => any, Map<string, CacheObject>>();
-const idPropertySymbol = Symbol();
-let uniqueObjectId = 1;
+const instanceMap = new Map<object, number>();
+let uniqueInstanceId = 1;
 
 export interface Config {
 	resolver?: (...args: any[]) => string | number;
@@ -35,10 +35,10 @@ export function memoize(config: Config = {}) {
 			this: { [id: symbol]: number },
 			...args: any[]
 		) {
-			let objectId = this[idPropertySymbol];
+			let objectId = instanceMap.get(this);
 			if (!objectId) {
-				objectId = ++uniqueObjectId;
-				this[idPropertySymbol] = objectId;
+				objectId = ++uniqueInstanceId;
+				instanceMap.set(this, objectId);
 			}
 
 			const key = config.resolver
