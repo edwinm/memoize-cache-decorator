@@ -25,6 +25,10 @@ Since TypeScript decorators are used, the source has to be TypeScript.
 Also, decorators can only be used for class methods and getters.
 Plain JavaScript decorators are planned for the future.
 
+## Roadmap
+
+Before autumn 2023: make cache clearing more precise.
+
 ## Installation
 
 ```bash
@@ -69,7 +73,39 @@ console.log(example.myFunction());
 //=> 0.7649863352328616
 ```
 
-In practice, the function would probably do a fetch or a database call.
+In practice, the function would probably do a fetch, file read or a database call.
+
+```ts
+import { memoize, clear } from "memoize-cache-decorator";
+
+class Example {
+	@memoize({ ttl: 5 * 60 * 1000 })
+	async getData(path: string) {
+		try {
+			const response = await fetch(path, {
+				headers: {
+					Accept: "application/json",
+				},
+			});
+			return response.json();
+		} catch (error) {
+			console.error(
+				`While fetching ${path}, the following error occured`,
+				error
+			);
+			return error;
+		}
+	}
+}
+
+const example = new Example();
+
+// Now, every time this function is called with this path, it returns the data  without
+// fetching it every time.
+// It will do a fetch() again after 5 minutes or when `clear(example.getData)` is called.
+
+const data = await example.getData("/path-to-data");
+```
 
 ## API
 
