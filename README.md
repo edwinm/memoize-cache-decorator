@@ -73,7 +73,7 @@ console.log(example.myFunction());
 //=> 0.7649863352328616
 ```
 
-In practice, the function would probably do a fetch, file read or a database call.
+In practice, the function would probably do a fetch, read a file or do a database call.
 
 ```ts
 import { memoize, clear } from "memoize-cache-decorator";
@@ -100,12 +100,12 @@ class Example {
 
 const example = new Example();
 
-// Now, every time this function is called with this path, it returns the data  without
-// fetching it every time.
-// It will do a fetch() again after 5 minutes or when `clear(example.getData)` is called.
-
 const data = await example.getData("/path-to-data");
 ```
+
+Now, every time `getData` is called with this path, it returns the data without
+fetching over the network it every time.
+It will do a fetch over the network again after 5 minutes or when `clear(example.getData)` is called.
 
 ## API
 
