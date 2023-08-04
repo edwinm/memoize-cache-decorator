@@ -74,6 +74,7 @@ console.log(example.myFunction());
 ```
 
 In practice, the function would probably do a fetch, read a file or do a database call.
+Here's another, more realistic example:
 
 ```ts
 import { memoize, clear } from "memoize-cache-decorator";
@@ -104,7 +105,7 @@ const data = await example.getData("/path-to-data");
 ```
 
 Now, every time `getData` is called with this path, it returns the data without
-fetching over the network it every time.
+fetching it over the network every time.
 It will do a fetch over the network again after 5 minutes or when `clear(example.getData)` is called.
 
 ## API
