@@ -1,4 +1,4 @@
-import { memoize, clear } from "../";
+import { memoize, clearFunction } from "../";
 
 interface IObject {
 	id: number;
@@ -215,7 +215,7 @@ it("Test clear", () => {
 	example.a++;
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
 	example.a++;
-	clear(example.getA);
+	clearFunction(example.getA);
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=12');
 	example.a++;
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=12');

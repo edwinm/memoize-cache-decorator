@@ -1,5 +1,5 @@
 /**!
- @preserve memoize-decorator 1.11.0
+ @preserve memoize-decorator 1.12.0
  @copyright 2023 Edwin Martin
  @license MIT
  */
@@ -8,4 +8,4 @@ export interface Config {
     ttl?: number;
 }
 export declare function memoize(config?: Config): (target: object, propertyName: string, propertyDescriptor: PropertyDescriptor) => PropertyDescriptor;
-export declare function clear(fn: (...args: any) => any): void;
+export declare function clearFunction(fn: (...args: any) => any): void;
