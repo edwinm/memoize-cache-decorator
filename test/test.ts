@@ -1,4 +1,4 @@
-import { memoize, clearFunction } from "../";
+import { memoize, clearFunction, clear } from "../";
 
 interface IObject {
 	id: number;
@@ -210,7 +210,7 @@ it("Test ttl with static function", async () => {
 	expect(Example.expiring30Static("10")).toEqual("arg=2-10");
 });
 
-it("Test clear", () => {
+it("Test clearFunction", () => {
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
 	example.a++;
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
@@ -219,4 +219,33 @@ it("Test clear", () => {
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=12');
 	example.a++;
 	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=12');
+});
+
+it("Test clear", () => {
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
+	example.a++;
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
+	example.a++;
+	clear(example, example.getA, 20, "north");
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=10');
+	clear(example, example.getA, 20, "south");
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=12');
+	example.a++;
+	expect(example.getA(20, "south")).toEqual('getA(20, "south"); a=12');
+});
+
+it("Test clear with ttl and two instances", async () => {
+	const example2 = new Example();
+	expect(example.expiring60()).toEqual("a=10");
+	expect(example2.expiring60()).toEqual("a=10");
+	example.a++;
+	example2.a++;
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	expect(example.expiring60()).toEqual("a=10");
+	expect(example2.expiring60()).toEqual("a=10");
+	example.a++;
+	example2.a++;
+	clear(example2, example.expiring60);
+	expect(example.expiring60()).toEqual("a=10");
+	expect(example2.expiring60()).toEqual("a=12");
 });

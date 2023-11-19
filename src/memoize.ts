@@ -1,13 +1,19 @@
 /**!
- @preserve memoize-decorator 1.12.0
+ @preserve memoize-decorator 2.0.0
  @copyright 2023 Edwin Martin
  @license MIT
  */
 
 import stringify from "json-stringify-safe";
 
-// cacheMap maps every function to a maps with caches
-const cacheMap = new Map<(...args: any) => any, Map<string, CacheObject>>();
+// cacheMap maps every function to a map with caches
+const cacheMap = new Map<
+	(...args: any) => any,
+	{
+		functionCacheMap: Map<string, CacheObject>;
+		resolver?: (...args: any[]) => string | number;
+	}
+>();
 // instanceMap maps every instance to a unique id
 const instanceMap = new Map<PropertyDescriptor, number>();
 let instanceIdCounter = 1;
@@ -31,6 +37,7 @@ export function memoize(config: Config = {}) {
 		const prop = propertyDescriptor.value ? "value" : "get";
 
 		const originalFunction = propertyDescriptor[prop];
+
 		// functionCacheMap maps every instance plus arguments to a CacheObject
 		const functionCacheMap = new Map<string, CacheObject>();
 
@@ -61,7 +68,10 @@ export function memoize(config: Config = {}) {
 			return newResult;
 		};
 
-		cacheMap.set(propertyDescriptor[prop], functionCacheMap);
+		cacheMap.set(propertyDescriptor[prop], {
+			functionCacheMap,
+			resolver: config.resolver,
+		});
 
 		return propertyDescriptor;
 	};
@@ -69,9 +79,30 @@ export function memoize(config: Config = {}) {
 
 // Clear all caches for a specific function for all instances
 export function clearFunction(fn: (...args: any) => any) {
-	const functionCacheMap = cacheMap.get(fn);
+	const functionCache = cacheMap.get(fn);
 
-	if (functionCacheMap) {
-		functionCacheMap.clear();
+	if (functionCache) {
+		functionCache.functionCacheMap.clear();
 	}
+}
+
+// Clear the cache for an instance and for specific arguments
+export function clear(
+	instance: object,
+	fn: (...args: any) => any,
+	...args: any[]
+) {
+	const functionCache = cacheMap.get(fn);
+	const instanceId = instanceMap.get(instance);
+	if (!functionCache || !instanceId) {
+		return;
+	}
+
+	const key = functionCache.resolver
+		? functionCache.resolver.apply(instance, args)
+		: stringify(args);
+
+	const cacheKey = `${instanceId}:${key}`;
+
+	functionCache.functionCacheMap.delete(cacheKey)!;
 }

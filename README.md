@@ -18,16 +18,13 @@ With support for:
 - Async functions
 - Static functions
 - Cache expiration
-- Clearing the cache
+- Clearing the cache on two levels
 - Custom resolver function
+- TypeScript
 
 Since TypeScript decorators are used, the source has to be TypeScript.
 Also, decorators can only be used for class methods and getters.
 Plain JavaScript decorators are planned for the future.
-
-## Roadmap
-
-Before autumn 2023: make cache clearing more precise.
 
 ## Installation
 
@@ -77,7 +74,7 @@ In practice, the function would probably do a fetch, read a file or do a databas
 Here's another, more realistic example:
 
 ```ts
-import { memoize, clear } from "memoize-cache-decorator";
+import { memoize } from "memoize-cache-decorator";
 
 class Example {
 	@memoize({ ttl: 5 * 60 * 1000 })
@@ -106,7 +103,7 @@ const data = await example.getData("/path-to-data");
 
 Now, every time `getData` is called with this path, it returns the data without
 fetching it over the network every time.
-It will do a fetch over the network again after 5 minutes or when `clear(example.getData)` is called.
+It will do a fetch over the network again after 5 minutes or when `clearFunction(example.getData)` is called.
 
 ## API
 
@@ -164,14 +161,46 @@ class Example {
 }
 ```
 
-### clear(fn)
+### clear(instance, fn, arguments)
 
-Clears the cache belonging to a memoized function.
+##### instance object
 
-Call `clear` with the memoized function as argument.
+##### fn function
+
+##### arguments \[optional\] arguments of fn
+
+Clears the cache belonging to a memoized function for a specific instance and specific arguments.
+
+Call `clear` with as arguments the instance, memoized function and memoized function arguments.
 
 ```ts
 import { memoize, clear } from "memoize-cache-decorator";
+
+class Example {
+	@memoize()
+	getDirection(direction: string) {
+		return fetch(`/rest/example/direction/${direction}`);
+	}
+
+	southUpdated() {
+		// The next time getComments("south") is called in this instance, comments will
+		// be fetched from the server again. But only for this instance.
+		clear(this, this.getDirection, "south");
+	}
+}
+```
+
+### clearFunction(fn)
+
+##### fn function
+
+Clears all caches belonging to a memoized function.
+All caches are cleared for the given function for all instances and for all arguments.
+
+Call `clearFunction` with as argument the memoized function.
+
+```ts
+import { memoize, clearFunction } from "memoize-cache-decorator";
 
 class Example {
 	@memoize()
@@ -181,8 +210,8 @@ class Example {
 
 	commentsUpdated() {
 		// The next time getComments() is called, comments will
-		// be fetched from the server.
-		clear(this.getComments);
+		// be fetched from the server again.
+		clearFunction(this.getComments);
 	}
 }
 ```
