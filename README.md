@@ -124,7 +124,7 @@ interface Config {
 
 Function to convert function arguments to a unique key.
 
-Without a `resolver` function, the arguments are converted to a key with `json-stringify-safe`,
+Without a `resolver` function, the arguments are converted to a key with
 a save version of JSON stringify.
 This works fine when the arguments are primitives like strings, numbers and booleans.
 This is undesirable when passing in objects with irrelevant data, like DOM elements.
@@ -183,7 +183,7 @@ class Example {
 	}
 
 	southUpdated() {
-		// The next time getComments("south") is called in this instance, comments will
+		// The next time getComments("south") is called in this instance, data will
 		// be fetched from the server again. But only for this instance.
 		clear(this, this.getDirection, "south");
 	}
