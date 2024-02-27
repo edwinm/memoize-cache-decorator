@@ -32,6 +32,16 @@ Plain JavaScript decorators are planned for the future.
 npm install --save-dev memoize-cache-decorator
 ```
 
+## Deno
+
+In Deno, use:
+
+```js
+import { memoize } from "jsr:@edwinm/memoize-decorator@2";
+```
+
+See also [@edwinm/memoize-decorator@2 on JSR](https://jsr.io/@edwinm/memoize-decorator@2.0.0).
+
 ## Usage
 
 ```ts

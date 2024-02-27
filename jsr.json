@@ -1,0 +1,5 @@
+{
+	"name": "@edwinm/memoize-decorator",
+	"version": "2.0.0",
+	"exports": "./src/memoize.ts"
+}

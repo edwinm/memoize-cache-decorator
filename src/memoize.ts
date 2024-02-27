@@ -28,7 +28,13 @@ interface CacheObject {
 	timeout: number;
 }
 
-export function memoize(config: Config = {}) {
+export function memoize(
+	config: Config = {}
+): (
+	target: object,
+	propertyName: string,
+	propertyDescriptor: PropertyDescriptor
+) => PropertyDescriptor {
 	return function (
 		target: object,
 		propertyName: string,
