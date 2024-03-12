@@ -1,5 +1,5 @@
 /**!
- @preserve memoize-decorator 2.0.0
+ @preserve memoize-decorator 2.0.1
  @copyright 2023 Edwin Martin
  @license MIT
  */
@@ -110,5 +110,5 @@ export function clear(
 
 	const cacheKey = `${instanceId}:${key}`;
 
-	functionCache.functionCacheMap.delete(cacheKey)!;
+	functionCache.functionCacheMap.delete(cacheKey);
 }

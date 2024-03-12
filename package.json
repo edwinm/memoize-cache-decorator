@@ -1,6 +1,6 @@
 {
 	"name": "memoize-cache-decorator",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Cache the result of a method or getter for better performance. Supports timeout and clearing the cache.",
 	"type": "module",
 	"license": "MIT",
