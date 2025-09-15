@@ -17,6 +17,7 @@
 		"lint": "eslint . --ext .ts"
 	},
 	"keywords": [
+		"front-end",
 		"memoize",
 		"decorator",
 		"cache",
