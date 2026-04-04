@@ -73,7 +73,7 @@ class Example {
 	}
 }
 
-let example;
+let example: Example;
 
 beforeEach(() => {
 	example = new Example();

@@ -6,7 +6,8 @@
 		"lib": ["es6"],
 		"module": "es6",
 		"target": "es6",
-		"moduleResolution": "node"
+		"moduleResolution": "bundler",
+		"types": ["jest", "node"]
 	},
 	"files": ["test.ts"]
 }
